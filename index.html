@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <style>
+    body {
+        margin: 0;
+        padding: 0;
+        height: 100vh;
+        width: 100vw;
+    }
+
+    #wrapper {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        width: 100%;
+        background-color: #25252b;
+    }
+
+    .colum {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content:center;
+    }
+
+    .row {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content:center;
+    }
+
+    #theme {
+        display: flex;        
+        justify-content:center;
+        align-items: center;
+        border: 3px solid #2b09a5;
+        border-radius: 20px;
+        background: radial-gradient(circle, #bb2b2b 0%, #222968 100%);
+        margin-bottom: 40px;
+    }
+
+    .maxWidth {
+        width: 900px;
+        height: 70px;
+    }
+
+    .minWidth {
+        width: 300px;
+        height: 300px;
+    }
+
+    label {
+        font-size: 25px;
+        font-weight: bolder;
+        color: black;
+    }
+
+    #col1,
+    #col2,
+    #col3 {
+        margin-right: 40px;;
+    }
+
+    #quantityRow,
+    #quantityCol {
+        margin: 0;
+        padding: 0;
+        border: 0px;
+        height: 40px;
+        width: 300px;
+        margin-bottom: 40px;
+        box-shadow: inset 0px 0px 5px 5px #8280f5;  
+        font-size: 20px;
+    }
+
+    #ok {
+        font-size: 25px;
+        height: 50px;
+        width: 140px;
+        margin-bottom: 5%;
+        border: 0px;
+        border-radius: 20px;
+        color: #000;
+        background: radial-gradient(circle, #bb2b2b 0%, #222968 100%);
+        box-shadow:
+            0 1px #ffffff33 inset,
+            0 3px 5px #00010680,
+            0 0 3px 1px #00010633;
+    }
+
+    #ok:hover {
+        height: 55px;
+        width: 140px;
+        cursor: pointer;
+        font-weight: bolder;
+    }
+
+    #play {
+        font-size: 25px;
+        height: 140px;
+        width: 140px;
+        margin-bottom: 10px;
+        border: 0px;
+        border-radius: 100px;
+        color: #000;
+        background: radial-gradient(circle, #3889cc 0%, #0e133e 100%);
+        box-shadow:
+            0 1px #ffffff33 inset,
+            0 3px 5px #00010680,
+            0 0 3px 1px #00010633;
+    }
+
+    #play:hover {
+        height: 155px;
+        width: 155px;
+        cursor: pointer;
+        background: radial-gradient(circle, #bb2b2b 0%, #0e133e 100%);
+        color: #070920;
+    }
+
+    .invisible {
+        display: none;
+    }
+
+    span {
+        font-size: 110px;
+        padding-left: 20px;
+    }
+
+    td {
+        height: 60px;
+        width: 60px;
+        background-color: #ff0000;
+        border-radius: 5px;
+    }
+
+    table {
+        border-spacing: 5px;
+    }
+</style>
+    <title>The light show</title>
+</head>
+<body>
+    <div id="wrapper" class="colum">
+        <div id="theme" class="row maxWidth">
+            <audio src="./zivert.mp3" id="audio"></audio>
+            <label for="col1">Orange-red theme</label>
+            <input type="radio" name="color" id="col1">
+            <label for="col2">Blue-green theme</label>
+            <input type="radio" name="color" id="col2">
+            <label for="col3">Different  colors theme</label>
+            <input type="radio" name="color" id="col3">
+        </div>
+        <input id="quantityRow" type="text" placeholder="Enter the number of rows">
+        <input id="quantityCol" type="text" placeholder="Enter the number of columns">
+        <button id="ok">OK</button>
+        <button id="play" class="invisible"><span>&#9658;</span></button>
+    </div>
+    <script>
+        const wrapper = document.getElementById('wrapper');
+        const button = document.getElementById('play');
+        const table = document.createElement('table');
+        const tbody = document.createElement('tbody');
+        const audio = document.getElementById('audio');
+        const col1 = document.getElementById('col1');
+        const col2 = document.getElementById('col2');
+        const theme = document.getElementById('theme');
+        let colors = [
+            ['FF7F50', 'FF6347', 'FF4500', 'FF8C00', 'FFA500','FF7F50', 'FF6347', 'FF4500', 'FF8C00', 'FFA500', 'CD5C5C', 'F08080', 'FA8072', 'E9967A', 'FFA07A', 'DC143C', 'FF0000', 'B22222', '8B0000', 'FF7F50', 'FF6347', 'FF4500', 'FF8C00', 'FFA500','FF7F50', 'FF6347', 'FF4500', 'FF8C00', 'FFA500', 'CD5C5C', 'F08080', 'FA8072', 'E9967A', 'FFA07A', 'DC143C', 'FF0000', 'B22222', '8B0000', 'FF7F50', 'FF6347', 'FF4500', 'FF8C00', 'FFA500','FF7F50', 'FF6347', 'FF4500', 'FF8C00', 'FFA500', 'CD5C5C', 'F08080', 'FA8072', 'E9967A', 'FFA07A', 'DC143C', 'FF0000', 'B22222', '8B0000', 'FF7F50', 'FF6347', 'FF4500', 'FF8C00', 'FFA500','FF7F50', 'FF6347', 'FF4500', 'FF8C00', 'FFA500', 'CD5C5C', 'F08080', 'FA8072', 'E9967A', 'FFA07A', 'DC143C', 'FF0000', 'B22222', '8B0000', 'FF7F50', 'FF6347', 'FF4500', 'FF8C00', 'FFA500','FF7F50', 'FF6347', 'FF4500', 'FF8C00', 'FFA500', 'CD5C5C', 'F08080', 'FA8072', 'E9967A', 'FFA07A', 'DC143C', 'FF0000', 'B22222', '8B0000', 'FF7F50', 'FF6347', 'FF4500', 'FF8C00', 'FFA500','FF7F50', 'FF6347', 'FF4500', 'FF8C00', 'FFA500', 'CD5C5C', 'F08080', 'FA8072', 'E9967A', 'FFA07A', 'DC143C', 'FF0000', 'B22222', '8B0000', 'FF7F50', 'FF6347', 'FF4500', 'FF8C00', 'FFA500','FF7F50', 'FF6347', 'FF4500', 'FF8C00', 'FFA500', 'CD5C5C', 'F08080', 'FA8072', 'E9967A', 'FFA07A', 'DC143C', 'FF0000', 'B22222', '8B0000', 'FF7F50', 'FF6347', 'FF4500', 'FF8C00', 'FFA500','FF7F50', 'FF6347', 'FF4500', 'FF8C00', 'FFA500', 'CD5C5C', 'F08080', 'FA8072', 'E9967A', 'FFA07A', 'DC143C', 'FF0000', 'B22222', '8B0000','FF7F50', 'FF6347', 'FF4500', 'FF8C00', 'FFA500','FF7F50', 'FF6347', 'FF4500', 'FF8C00', 'FFA500', 'CD5C5C', 'F08080', 'FA8072', 'E9967A', 'FFA07A', 'DC143C', 'FF0000', 'B22222', '8B0000'], 
+            ['00FFFF', 'E0FFFF', '7FFFD4', '48D1CC', '5F9EA0', '4682B4', '6495ED', '0000FF', '191970', 'ADFF2F', '00FF00', '32CD32', '98FB98', '00FA9A', '3CB371', '228B22', '9ACD32', '66CDAA', '20B2AA', '00FFFF', 'E0FFFF', '7FFFD4', '48D1CC', '5F9EA0', '4682B4', '6495ED', '0000FF', '191970', 'ADFF2F', '00FF00', '32CD32', '98FB98', '00FA9A', '3CB371', '228B22', '9ACD32', '66CDAA', '20B2AA', '00FFFF', 'E0FFFF', '7FFFD4', '48D1CC', '5F9EA0', '4682B4', '6495ED', '0000FF', '191970', 'ADFF2F', '00FF00', '32CD32', '98FB98', '00FA9A', '3CB371', '228B22', '9ACD32', '66CDAA', '20B2AA', '00FFFF', 'E0FFFF', '7FFFD4', '48D1CC', '5F9EA0', '4682B4', '6495ED', '0000FF', '191970', 'ADFF2F', '00FF00', '32CD32', '98FB98', '00FA9A', '3CB371', '228B22', '9ACD32', '66CDAA', '20B2AA', '00FFFF', 'E0FFFF', '7FFFD4', '48D1CC', '5F9EA0', '4682B4', '6495ED', '0000FF', '191970', 'ADFF2F', '00FF00', '32CD32', '98FB98', '00FA9A', '3CB371', '228B22', '9ACD32', '66CDAA', '20B2AA', '00FFFF', 'E0FFFF', '7FFFD4', '48D1CC', '5F9EA0', '4682B4', '6495ED', '0000FF', '191970', 'ADFF2F', '00FF00', '32CD32', '98FB98', '00FA9A', '3CB371', '228B22', '9ACD32', '66CDAA', '20B2AA', '00FFFF', 'E0FFFF', '7FFFD4', '48D1CC', '5F9EA0', '4682B4', '6495ED', '0000FF', '191970', 'ADFF2F', '00FF00', '32CD32', '98FB98', '00FA9A', '3CB371', '228B22', '9ACD32', '66CDAA', '20B2AA', '00FFFF', 'E0FFFF', '7FFFD4', '48D1CC', '5F9EA0', '4682B4', '6495ED', '0000FF', '191970', 'ADFF2F', '00FF00', '32CD32', '98FB98', '00FA9A', '3CB371', '228B22', '9ACD32', '66CDAA', '20B2AA', '00FFFF', 'E0FFFF', '7FFFD4', '48D1CC', '5F9EA0', '4682B4', '6495ED', '0000FF', '191970', 'ADFF2F', '00FF00', '32CD32', '98FB98', '00FA9A', '3CB371', '228B22', '9ACD32', '66CDAA', '20B2AA'],
+            ['A80401', '02402C', 'E32636', 'EFDECD', 'E52B50', 'FFBF00', '9966CC', '8DB600', '00FFFF', '007FFF', '4B5320', '848482', 'FE6F5E', '000000', '0095B6', 'CC0000', 'B5A642', '66FF00', '08E8DE', 'CD00CD', 'CD7F32', '900020', 'F0DC82', 'E97451', '8A3324', '78866B', '772953', 'ED9121', 'C41E3A', 'ACE1AF', '960018', 'DE3163','A80401', '02402C', 'E32636', 'EFDECD', 'E52B50', 'FFBF00', '9966CC', '8DB600', '00FFFF', '007FFF', '4B5320', '848482', 'FE6F5E', '000000', '0095B6', 'CC0000', 'B5A642', '66FF00', '08E8DE', 'CD00CD', 'CD7F32', '900020', 'F0DC82', 'E97451', '8A3324', '78866B', '772953', 'ED9121', 'C41E3A', 'ACE1AF', '960018', 'DE3163', 'A80401', '02402C', 'E32636', 'EFDECD', 'E52B50', 'FFBF00', '9966CC', '8DB600', '00FFFF', '007FFF', '4B5320', '848482', 'FE6F5E', '000000', '0095B6', 'CC0000', 'B5A642', '66FF00', '08E8DE', 'CD00CD', 'CD7F32', '900020', 'F0DC82', 'E97451', '8A3324', '78866B', '772953', 'ED9121', 'C41E3A', 'ACE1AF', '960018', 'DE3163', 'A80401', '02402C', 'E32636', 'EFDECD', 'E52B50', 'FFBF00', '9966CC', '8DB600', '00FFFF', '007FFF', '4B5320', '848482', 'FE6F5E', '000000', '0095B6', 'CC0000', 'B5A642', '66FF00', '08E8DE', 'CD00CD', 'CD7F32', '900020', 'F0DC82', 'E97451', '8A3324', '78866B', '772953', 'ED9121', 'C41E3A', 'ACE1AF', '960018', 'DE3163', 'A80401', '02402C', 'E32636', 'EFDECD', 'E52B50', 'FFBF00', '9966CC', '8DB600', '00FFFF', '007FFF', '4B5320', '848482', 'FE6F5E', '000000', '0095B6', 'CC0000', 'B5A642', '66FF00', '08E8DE', 'CD00CD', 'CD7F32', '900020', 'F0DC82', 'E97451', '8A3324', '78866B', '772953', 'ED9121', 'C41E3A', 'ACE1AF', '960018', 'DE3163']
+        ];
+        let cell;					
+        let context;
+        let analyser;
+        let src;
+        let array;
+        let colorCell;
+        let cellAll;
+        let themeColor;
+        let quantityRow = document.getElementById('quantityRow');
+        let quantityCol = document.getElementById('quantityCol');
+        let ok = document.getElementById('ok');
+
+        const getTable = () => {
+
+            for(let i = 0; i < quantityRow.value; ++i){
+                let row = document.createElement('tr');
+
+                for(let j = 0; j < quantityCol.value; ++j){
+                    cell = document.createElement('td');
+                    row.append(cell);
+                }
+                tbody.append(row);					
+            }
+            table.append(tbody);
+            wrapper.classList.remove('colum');
+            theme.classList.remove('row');
+            theme.classList.remove('maxWidth');
+            wrapper.append(table); 
+            quantityRow.remove();
+            quantityCol.remove();
+            ok.remove();
+            button.classList.remove('invisible');
+            wrapper.classList.add('row');
+            theme.classList.add('colum');
+            theme.classList.add('minWidth');
+        };
+
+        ok.addEventListener('click', getTable);
+        let num = quantityRow.value * quantityCol.value;
+        array = new Uint8Array(num*2);
+
+        const getColor = () => {
+
+            const getRandom = () => {
+                return Math.random() - 0.5;
+            };
+            if(col1.checked) {
+                themeColor = colors[0];
+            }else if(col2.checked) {
+                themeColor = colors[1];
+            } else {
+                themeColor = colors[2];
+            }
+            themeColor.sort(getRandom);
+            for(let i = 0; i <= themeColor.length; i++) {
+
+                cellAll.forEach((element) => { 
+                    element.style.backgroundColor = `#${themeColor[i]}`;
+                    i++;
+                });
+            }
+        };
+
+        const preporation = () => {
+            context = new AudioContext();
+            analyser = context.createAnalyser();
+            src = context.createMediaElementSource(audio);
+            src.connect(analyser);
+            analyser.connect(context.destination);
+            loop();
+        };
+
+        const loop = () => {
+            window.requestAnimationFrame(loop);
+            array = new Uint8Array(analyser.frequencyBinCount);
+            analyser.getByteFrequencyData(array);
+            cellAll = document.querySelectorAll('td');
+            getColor();
+
+            cellAll.forEach((element) => { 
+
+                for(let i = 0 ; i <= num ; i++){
+                    colorCell = array[i+num];
+                    element.style.opacity = 0.005*colorCell;
+                }
+            });
+        };
+
+        button.addEventListener('click', () => {
+            button.remove();
+            preporation();
+            audio.play();
+        });
+    </script>
+</body>
+</html>
